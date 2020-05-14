@@ -1,0 +1,95 @@
+@import '~antd/es/style/themes/default.less';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.colorWeak {
+  filter: invert(80%);
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+
+canvas {
+  display: block;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+@media (max-width: @screen-xs) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+
+    &-thead > tr,
+    &-tbody > tr {
+      > th,
+      > td {
+        white-space: pre;
+
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// 兼容IE11
+@media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
+  body .ant-design-pro > .ant-layout {
+    min-height: 100vh;
+  }
+}
+
+.icon {
+  width: 1.2em;
+  height: 1.2em;
+  margin-right: 5px;
+  overflow: hidden;
+  vertical-align: -0.3em;
+  fill: currentColor;
+}
+
+::-webkit-scrollbar,
+.scroll-context::-webkit-scrollbar {
+  width: 10px;
+  height: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #535353;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-track {
+  background: #EDEDED;
+  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.ant-modal-content {
+  //.ant-modal-header {}
+  //.ant-modal-body {}
+  .ant-modal-footer {
+    text-align: center;
+  }
+}
+
+.hover-style:hover{
+  box-shadow: 0 0 20px #ccc;
+  transform: translateY(-3px);
+  transition: all .2s linear;
+}
