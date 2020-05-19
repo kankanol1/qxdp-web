@@ -14,7 +14,7 @@ const CodePreview = ({ children }) => (
 export default () => (
   <PageHeaderWrapper>
     <Card>
-      Hello GranLand BO
+      Hello QXD
     </Card>
   </PageHeaderWrapper>
 );

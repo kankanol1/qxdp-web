@@ -3,7 +3,7 @@
 * @param  elementId
 * 传入全屏组件id 默认为document.body
 *
-* 具体案例前往数据测试data模块下查看  granlandbo/src/pages/data/index
+* 具体案例前往数据测试data模块下查看  qxd/src/pages/data/index
 *
 * */
 

@@ -12,7 +12,7 @@ export default () => (
           textAlign: 'center',
         }}
       >
-        <SmileTwoTone />GranLand BO <HeartTwoTone twoToneColor="#eb2f96" /> You
+        <SmileTwoTone />QXD<HeartTwoTone twoToneColor="#eb2f96" /> You
       </Typography.Title>
     </Card>
   </PageHeaderWrapper>

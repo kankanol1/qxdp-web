@@ -116,6 +116,7 @@ const BasicLayout = props => {
         rightContentRender={() => <RightContent/>}
         {...props}
         {...settings}
+        contentStyle={{backgroundColor:'#fff'}}
       >
           <Authorized authority={authorized.authority} noMatch={noMatch}>
             {children}

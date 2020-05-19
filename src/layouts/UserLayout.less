@@ -13,6 +13,7 @@
   height: 40px;
   line-height: 44px;
   text-align: right;
+
   :global(.ant-dropdown-trigger) {
     margin-right: 24px;
   }
@@ -20,7 +21,7 @@
 
 .content {
   flex: 1;
-  padding: 32px 0;
+  padding: 18px 4px;
 }
 
 @media (min-width: @screen-md-min) {
@@ -32,7 +33,7 @@
   }
 
   .content {
-    padding: 32px 0 24px;
+    padding: 18px 4px;
   }
 }
 
@@ -43,24 +44,33 @@
 .header {
   height: 44px;
   line-height: 44px;
+
   a {
     text-decoration: none;
   }
 }
 
 .logo {
-  height: 44px;
+  width: 46px;
+  height: 46px;
   margin-right: 16px;
   vertical-align: top;
 }
 
 .title {
+  line-height: 50px;
   position: relative;
-  top: 2px;
   color: @heading-color;
   font-weight: 600;
-  font-size: 33px;
+  font-size:20px;
   font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.context{
+  color: @heading-color;
+  font-weight: 600;
+  font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+
 }
 
 .desc {

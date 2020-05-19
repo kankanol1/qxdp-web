@@ -20,7 +20,7 @@ const GlobalHeaderRight = props => {
   }
   return (
     <div className={className}>
-      <HeaderSearch
+      {/* <HeaderSearch
         className={`${styles.action} ${styles.search}`}
         placeholder="站内搜索"
         defaultValue="gl"
@@ -46,7 +46,7 @@ const GlobalHeaderRight = props => {
           // eslint-disable-next-line no-console
           console.log('input', value);
         }}
-      />
+      /> */}
       <Avatar />
       {REACT_APP_ENV && (
         <span>

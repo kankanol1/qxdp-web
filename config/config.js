@@ -59,7 +59,7 @@ const plugins = [
   ],
 
 ];
-const publicPath = '/gl/';
+const publicPath = '/qxd/';
 if (isAntDesignProPreview) {
   // 针对 preview.pro.ant.design 的 GA 统计代码
   plugins.push([
@@ -96,7 +96,12 @@ export default {
       routes: [
         {
           path: '/user',
-          redirect: '/user/login',
+          redirect: '/user/logins',
+        },
+        {
+          name: 'logins',
+          path: '/user/logins',
+          component: './user/login/logins',
         },
         {
           name: 'login',
@@ -131,32 +136,39 @@ export default {
             },
             {
               name: '用户反馈',
-              icon: 'fileText',
+              // icon: 'fileText',
               path: '/feedback',
               component: './UserFeedback',
             },
             {
+              name: '举报/意见反馈',
+              // icon: 'fileText',
+              path: '/feedback/advice',
+              component: './UserFeedback/FeedbackResult',
+              hideInMenu:true,
+            },
+            {
               name: '课程审核',
-              icon: 'schedule',
+              // icon: 'schedule',
               path: '/check',
               component: './CurriculuReview',
             },
             {
               name: '课程管理',
-              icon: 'cluster',
+              // icon: 'cluster',
               path: '/cources',
               component: './CourceManagement',
             },
             {
               name: '用户管理',
-              icon: 'team',
+              // icon: 'team',
               path: '/users',
               component: './UserManagement',
             },
             //<TeamOutlined />
             {
               name: '人员管理',
-              icon: 'team',
+              // icon: 'team',
               path: '/person',
               component: './PersonManagement',
             },
