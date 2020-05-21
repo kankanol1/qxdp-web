@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import {Row,Col,List,Card} from 'antd';
+import {Row,Col,List,Badge} from 'antd';
 import CurvedComponent from "./components/CurvedComponent";
 import DataVisibleComponent2 from "./components/DataVisibleComponent2";
 import {DoubleRightOutlined} from '@ant-design/icons';
@@ -92,6 +92,7 @@ const UserFeedbackPage = props=>{
        <Row>
          {dataList&&dataList.map(item=><Col key={item.title} span={12}>
            <DataVisibleComponent2 dataAll={item}/>
+
          </Col>)}
        </Row>
       </Col>
@@ -99,7 +100,7 @@ const UserFeedbackPage = props=>{
     <Row>
       <Col offset={20} span={4}>
         <div style={{marginRight:10,padding:2,textAlign:'right'}}>
-          <Link to={"feedback/advice"}>意见和建议<DoubleRightOutlined /></Link>
+            <Link to={"feedback/advice"}>意见和建议<DoubleRightOutlined /></Link>
         </div>
       </Col>
     </Row>

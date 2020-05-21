@@ -40,16 +40,16 @@ const UserLayout = props => {
             <div className={styles.header}>
               <div>
                 <img alt="logo" className={styles.logo} src={logo}/>
-                <span className={styles.title}>趣学岛</span>
+                <span className={styles.title}>研知岛</span>
               </div>
             </div>
-            <div className={styles.desc}>趣学岛，你值得拥有！</div>
+            <div className={styles.desc}>研知岛，你值得拥有！</div>
           </div>*/}
           <div style={{padding:"10px 30px",height:70}}>
             <Row>
               <Col span={4}>
                 <img alt="logo" className={styles.logo} src={logo}/>
-                <span className={styles.title}>趣学岛</span>
+                <span className={styles.title}>研知岛</span>
               </Col>
             {/*  <Col offset={16} span={2}>
                 <Link style={{lineHeight:"50px"}} to={{pathname:'/qxd/user/login'}}>登录</Link>

@@ -15,7 +15,7 @@ export default {
   menu: {
     locale: true,
   },
-  title: '趣学岛',
+  title: '研知岛',
   pwa: false,
   iconfontUrl: '',
 };

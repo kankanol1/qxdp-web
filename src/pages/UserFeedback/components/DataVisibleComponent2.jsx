@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import {Row, Col,Card} from 'antd';
+import {Row, Col, Card, Badge} from 'antd';
 import {
   G2,
   Chart,
@@ -21,6 +21,7 @@ import {
   Util,
 } from 'bizcharts';
 import DataSet from '@antv/data-set';
+import {Link} from "umi";
 const { DataView } = DataSet;
 const styles ={
   mainTitle:{
@@ -73,7 +74,7 @@ const DataVisibleComponent = props => {
 
 
 
-  return (<div style={{border:'1px solid #000',height:160,margin:"10px"}}>
+  return (<div style={{border:'1px solid #000',height:160,margin:"10px",position:'relative'}}>
     <Chart
       data={dv}
       scale={cols}
@@ -125,6 +126,12 @@ const DataVisibleComponent = props => {
         />*/}
       </Geom>
     </Chart>
+      {title==="课程举报率"?(
+        <Link style={{position:'relative',top:-140,left:20,paddingRight:14,fontSize:12}} to={"feedback/advice"}>
+          未查看消息
+          <Badge overflowCount={99} offset={[6,-2]} count={105}/>
+        </Link>
+      ):null}
   </div>
 );
 }

@@ -136,39 +136,37 @@ export default {
             },
             {
               name: '用户反馈',
-              // icon: 'fileText',
               path: '/feedback',
               component: './UserFeedback',
             },
             {
               name: '举报/意见反馈',
-              // icon: 'fileText',
               path: '/feedback/advice',
               component: './UserFeedback/FeedbackResult',
               hideInMenu:true,
             },
             {
               name: '课程审核',
-              // icon: 'schedule',
               path: '/check',
               component: './CurriculuReview',
+            },{
+              name: '审核',
+              path: '/check/check',
+              hideInMenu:true,
+              component: './CurriculuReview/CheckPage',
             },
             {
               name: '课程管理',
-              // icon: 'cluster',
               path: '/cources',
               component: './CourceManagement',
             },
             {
               name: '用户管理',
-              // icon: 'team',
               path: '/users',
               component: './UserManagement',
             },
-            //<TeamOutlined />
             {
               name: '人员管理',
-              // icon: 'team',
               path: '/person',
               component: './PersonManagement',
             },

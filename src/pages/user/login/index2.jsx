@@ -11,7 +11,7 @@ const LoginBefore = props => {
         <Col span={4}>
           <div style={{paddingLeft:'30px'}}>
             <img alt="logo" className={styles.logo} src={logo}/>
-            <span className={styles.title}>趣学岛</span>
+            <span className={styles.title}>研知岛</span>
           </div>
         </Col>
         <Col offset={16} span={2}>

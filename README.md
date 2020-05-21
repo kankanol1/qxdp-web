@@ -1,4 +1,4 @@
-# 趣学岛
+# 研知岛
 
 本项目是基于 [Ant-Design-Pro](https://pro.ant.design) 框架建立的，下面是文件目录和具体的使用方法。
 

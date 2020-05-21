@@ -18,7 +18,7 @@ const UserModel = {
     *fetchCurrent(_, { call, put }) {
       // const response = yield call(queryCurrent);
       const response ={
-        name: '趣学岛',
+        name: '研知岛',
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
         userid: '00000001',
         email: 'granlan@gl-data.com',
