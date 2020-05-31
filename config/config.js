@@ -161,6 +161,12 @@ export default {
               component: './CourceManagement',
             },
             {
+              name: '审核',
+              path: '/cources/manage',
+              hideInMenu:true,
+              component: './CourceManagement/CheckPage',
+            },
+            {
               name: '用户管理',
               path: '/users',
               component: './UserManagement',

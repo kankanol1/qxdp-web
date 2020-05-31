@@ -3,7 +3,7 @@
  * To: More pain, more gain.
  */
 
-import React from 'react';
+import React,{useState} from 'react';
 import {Table,Pagination,Popover} from 'antd';
 import {FormOutlined} from '@ant-design/icons';
 import {Link} from 'umi';
@@ -72,7 +72,7 @@ const dataSource =Array(100)
       "commission|1-50": 20,
       "owner": "张三",
       "deadline": Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
-      "intro:":Mock.mock('@ctitle(100, 300)'),
+      "intro:":Mock.mock('@cparagraph()'),
       "bdeadline":Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
       "bmoney|100-200": 100,
       "type|1":["在线","录制视频","面授"],
@@ -85,10 +85,14 @@ const dataSource =Array(100)
   });
 
 const CurriculuReviewPage = props=>{
+  const [data,setData] = useState(dataSource.splice());
 
-  return(<div>
+  return(<div style={{padding:"10px 50px"}}>
     <Table
-      onChange={()=>{}}
+      onChange={(pagination)=>{
+        console.log(pagination);
+
+      }}
       style={{textAlign:'center'}}
       columns={columns}
       dataSource={dataSource}

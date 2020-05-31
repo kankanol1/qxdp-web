@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import {DoubleLeftOutlined,LeftOutlined} from '@ant-design/icons';
+import {LeftOutlined,DoubleLeftOutlined} from '@ant-design/icons';
 import {Link} from 'umi';
 import {Row,Col,Button,Card,Input} from 'antd';
 import styles from  '../styles.less'
@@ -20,7 +20,7 @@ const UserFeedbackPage = props=>{
       return (<div style={{paddingTop:20,paddingLeft:20}}>
         <Link to={"/check"}><DoubleLeftOutlined />{data[1]?data[1].breadcrumbName:null}</Link>
         <span style={{padding:"0 10px"}}>|</span>
-        <span>审核</span>
+        <span>课程详情</span>
       </div>)
     }} title={false}>
       <Card className={styles["advice-style"]}>
@@ -84,10 +84,10 @@ const UserFeedbackPage = props=>{
         </Row>
         <Row style={{marginTop:10}}>
           <Col span={10} style={{textAlign:"right"}}>
-            <Button type={"primary"} size={"large"}>拒绝</Button>
+            <Button type={"primary"} size={"large"}>关闭课程</Button>
           </Col>
           <Col offset={4} span={10} style={{textAlign:"left"}}>
-            <Button type={"primary"} size={"large"} >同意</Button>
+            <Button type={"primary"} size={"large"} >解散课程</Button>
           </Col>
         </Row>
 {/*
