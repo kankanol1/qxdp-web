@@ -8,10 +8,13 @@ td.ant-table-cell
 }
 
 
-.advice-style {
+ .advice-style :global {
   height: calc(100vh - 200px);
-  padding: 10px;
+  padding:0 10px;
   overflow: auto;
   border: 1px solid #eee;
   font-size: 16px;
+  .ant-card-body{
+    padding:4px 10px;
+  }
 }

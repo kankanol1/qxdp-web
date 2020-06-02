@@ -94,6 +94,7 @@ const dataSource =Array(100)
       "number|1-50": 20,
       "feedback|1-50": 20,
       "owner": "张三",
+      "check": "张三",
       "deadline": Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
       "intro:":Mock.mock('@cparagraph()'),
       "bdeadline":Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
@@ -141,19 +142,22 @@ const CurriculuReviewPage = props=>{
         </Button>
       </Col>
     </Row>
-    <Table
-      onChange={(pagination)=>{
-        console.log(pagination);
+    <div style={{border:'1px solid #eee'}}>
+      <Table
+        onChange={(pagination)=>{
+          console.log(pagination);
 
-      }}
-      style={{textAlign:'center'}}
-      columns={columns}
-      dataSource={data}
-      size={"small"}
-      bordered={true}
-      pagination={{current:1,pageSize:20}}
-      scroll={{y:360}}
-    />
+        }}
+        style={{textAlign:'center'}}
+        columns={columns}
+        dataSource={data}
+        size={"small"}
+        bordered={false}
+        pagination={{current:1,pageSize:20}}
+        scroll={{y:340}}
+      />
+    </div>
+
    {/* <Pagination
       onChange={()=>{}}
       onShowSizeChange={()=>{}}

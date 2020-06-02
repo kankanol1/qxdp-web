@@ -24,64 +24,75 @@ const UserFeedbackPage = props=>{
       </div>)
     }} title={false}>
       <Card className={styles["advice-style"]}>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>课程名称：</Col>
-          <Col>{state.title}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>申请人：</Col>
-          <Col>{state.owner}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>封面：</Col>
-          <Col>{state.img}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>简介：</Col>
-          <Col>{state.intro}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>预售截止日期：</Col>
-          <Col>{state.bdeadline}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>金额：</Col>
-          <Col>{state.money}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>预售金额：</Col>
-          <Col>{state.bmoney}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>单人次佣金：</Col>
-          <Col>{state.commission}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>开课形式：</Col>
-          <Col>{state.type}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>资料链接：</Col>
-          <Col>{state.src}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>开课老师账号：</Col>
-          <Col>{state.connect}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>紧急联系方式：</Col>
-          <Col>{state.tel}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>付费方式：</Col>
-          <Col>{state.way}</Col>
-        </Row>
-        <Row>
-          <Col span={10} style={{textAlign:"right"}}>填写拒绝审核理由：</Col>
-          <Col>
-            <Input.TextArea onChange={e=>console.log(e.target.value)}/>
-          </Col>
-        </Row>
+      <Row>
+        <Col span={12}>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>课程名称：</Col>
+            <Col>{state.title}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>申请人：</Col>
+            <Col>{state.owner}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>封面：</Col>
+            <Col>{state.img}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>简介：</Col>
+            <Col>{state.intro}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>预售截止日期：</Col>
+            <Col>{state.bdeadline}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>金额：</Col>
+            <Col>{state.money}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>预售金额：</Col>
+            <Col>{state.bmoney}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>单人次佣金：</Col>
+            <Col>{state.commission}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>开课形式：</Col>
+            <Col>{state.type}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>资料链接：</Col>
+            <Col>{state.src}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>开课老师账号：</Col>
+            <Col>{state.connect}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>紧急联系方式：</Col>
+            <Col>{state.tel}</Col>
+          </Row>
+          <Row>
+            <Col span={5} style={{textAlign:"right"}}>付费方式：</Col>
+            <Col>{state.way}</Col>
+          </Row>
+
+        </Col>
+        <Col>
+          <Row>
+            <Col span={12}>
+
+            </Col>
+          </Row>
+          <Row>
+            <Col span={12}>
+              
+            </Col>
+          </Row>
+        </Col>
+      </Row>
         <Row style={{marginTop:10}}>
           <Col span={10} style={{textAlign:"right"}}>
             <Button type={"primary"} size={"large"}>关闭课程</Button>
@@ -90,26 +101,10 @@ const UserFeedbackPage = props=>{
             <Button type={"primary"} size={"large"} >解散课程</Button>
           </Col>
         </Row>
-{/*
-
-"key": i,
-      "img": 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
-      "title":  Mock.mock('@ctitle(3, 8)'),
-      "money|100-200": 100,
-      "commission|1-50": 20,
-      "owner": "张三",
-      "deadline": Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
-      "intro:":Mock.mock('@ctitle(100, 300)'),
-      "bdeadline":Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
-      "bmoney|100-200": 100,
-      "type|1":["在线","录制视频","面授"],
-      "src":"https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-      "connect|1":["QQ","微信","手机号码"],
-      "tel":"12345678901",
-      "way|1":["付费开课","15%提成合作"],
-*/}
-
-
+        <Row>
+          <Col span={10} style={{textAlign:"right"}}>审核人：</Col>
+          <Col>{state.check}</Col>
+        </Row>
       </Card>
     </PageHeaderWrapper>
   </div>)

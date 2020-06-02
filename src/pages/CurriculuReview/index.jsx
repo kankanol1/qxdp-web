@@ -3,11 +3,11 @@
  * To: More pain, more gain.
  */
 
-import React,{useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Table,Pagination,Popover} from 'antd';
 import {FormOutlined} from '@ant-design/icons';
 import {Link} from 'umi';
-import Mock from 'mockjs';
+import {connect} from 'dva';
 import './styles.less';
 
 const columns = [
@@ -61,54 +61,53 @@ const columns = [
     }
   },
 ];
-const dataSource =Array(100)
-  .fill(0, 0, 100)
-  .map((item, i) => {
-    return Mock.mock({
-      "key": i,
-      "img": 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
-      "title":  Mock.mock('@ctitle(3, 8)'),
-      "money|100-200": 100,
-      "commission|1-50": 20,
-      "owner": "张三",
-      "deadline": Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
-      "intro:":Mock.mock('@cparagraph()'),
-      "bdeadline":Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
-      "bmoney|100-200": 100,
-      "type|1":["在线","录制视频","面授"],
-      "src":"https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-      "connect|1":["QQ","微信","手机号码"],
-      "tel":"12345678901",
-      "way|1":["付费开课","15%提成合作"],
-      }
-    )
-  });
 
 const CurriculuReviewPage = props=>{
-  const [data,setData] = useState(dataSource.splice());
+  const {curriculu,dispatch} = props;
+  const {dataSource,} = curriculu;
 
-  return(<div style={{padding:"10px 50px"}}>
+  useEffect(()=>{
+    dispatch({
+      type:'curriculu/get',
+    })
+  },[]);
+
+
+  const queryFun=(page,size)=>{
+    dispatch({
+      type:'curriculu/query',
+      payload:{page,size}
+    })
+  }
+
+
+  return(<div style={{margin:"10px 50px",border:'1px solid #eee'}}>
     <Table
-      onChange={(pagination)=>{
-        console.log(pagination);
-
-      }}
       style={{textAlign:'center'}}
       columns={columns}
       dataSource={dataSource}
       size={"small"}
-      bordered={true}
-      pagination={{current:1,pageSize:20}}
+      bordered={false}
+      // pagination={{current:1,pageSize:20}}
+      pagination={false}
       scroll={{y:360}}
     />
-   {/* <Pagination
-      onChange={()=>{}}
-      onShowSizeChange={()=>{}}
-      size="small"
-      total={50}
-      showSizeChanger
-      showQuickJumper />*/}
+    <div style={{height:45,width:'100%',padding:10,backgroundColor:'#fafafa',borderTop:'1px solid #eee'}}>
+      <Pagination
+        style={{float:'right'}}
+        onChange={(page, pageSize)=>{
+          queryFun(page, pageSize);
+        }}
+        onShowSizeChange={(current, size)=>{
+          queryFun(current, size);
+        }}
+        size="small"
+        total={200}
+        showSizeChanger
+        showQuickJumper />
+    </div>
+
   </div>)
 }
 
-export default CurriculuReviewPage;
+export default connect(({curriculu})=>({curriculu}))(CurriculuReviewPage);
