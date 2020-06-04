@@ -13,3 +13,4 @@ const studentTable = props=>{
     <Table/>
   </div>)
 }
+

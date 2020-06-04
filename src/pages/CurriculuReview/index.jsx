@@ -90,9 +90,9 @@ const CurriculuReviewPage = props=>{
       bordered={false}
       // pagination={{current:1,pageSize:20}}
       pagination={false}
-      scroll={{y:360}}
+      scroll={{y:380}}
     />
-    <div style={{height:45,width:'100%',padding:10,backgroundColor:'#fafafa',borderTop:'1px solid #eee'}}>
+    <div style={{height:50,width:'100%',padding:10,backgroundColor:'#fafafa',borderTop:'1px solid #eee'}}>
       <Pagination
         style={{float:'right'}}
         onChange={(page, pageSize)=>{
@@ -101,7 +101,7 @@ const CurriculuReviewPage = props=>{
         onShowSizeChange={(current, size)=>{
           queryFun(current, size);
         }}
-        size="small"
+        size="large"
         total={200}
         showSizeChanger
         showQuickJumper />

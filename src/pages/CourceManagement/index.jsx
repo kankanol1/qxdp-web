@@ -3,11 +3,12 @@
  * To: More pain, more gain.
  */
 
-import React,{useState} from 'react';
-import {Table,Button,Popover,Row,Col,Input} from 'antd';
-import {EyeOutlined,AudioOutlined} from '@ant-design/icons';
+import React, {useEffect, useState} from 'react';
+import {Table, Button, Popover, Row, Col, Input, Pagination} from 'antd';
+import {EyeOutlined, AudioOutlined} from '@ant-design/icons';
 import {Link} from 'umi';
-import Mock from 'mockjs';
+import {connect} from 'dva';
+import ExportJsonExcel from 'js-export-excel';
 import './styles.less';
 
 
@@ -23,30 +24,34 @@ const suffix = (
 
 const columns = [
   {
-    title: '图片',
-    dataIndex: 'img',
-    key: 'img',
-    render:(text,row)=>{
-      return (
-        <div style={{width:50,margin:'0 auto'}}>
-          <Popover placement="right" style={{border:'1px solid #eee'}} content={()=>(<div style={{width:100,margin:'0 auto'}}><img style={{width:100,height:100}} alt="example" src={text}/></div>)} title="课程封面">
-            <img style={{width:50,height:30}} alt="example" src={text}/>
-          </Popover>
-        </div>
-      )}
-  },
-  {
     title: '标题',
     dataIndex: 'title',
     key: 'title',
   },
+  {
+    title: '图片',
+    dataIndex: 'img',
+    key: 'img',
+    render: (text, row) => {
+      return (
+        <div style={{width: 50, margin: '0 auto'}}>
+          <Popover placement="right" style={{border: '1px solid #eee'}} content={() => (
+            <div style={{width: 100, margin: '0 auto'}}><img style={{width: 100, height: 100}} alt="example"
+                                                             src={text}/></div>)} title="课程封面">
+            <img style={{width: 50, height: 30}} alt="example" src={text}/>
+          </Popover>
+        </div>
+      )
+    }
+  },
+
   {
     title: '金额',
     dataIndex: 'money',
     key: 'money',
   },
   {
-    title: '佣金',
+    title: '单人次佣金',
     dataIndex: 'commission',
     key: 'commission',
   },
@@ -69,103 +74,155 @@ const columns = [
     title: '操作',
     dataIndex: 'action',
     key: 'action',
-    render:(text,row)=>{
+    render: (text, row) => {
       return (
         <div>
-          <Link to={{pathname:"cources/manage",state:row}} style={{marginRight:10}}>
-            <EyeOutlined style={{marginRight:8}} />查看</Link>
+          <Link to={{pathname: "cources/manage", state: row}} style={{marginRight: 10}}>
+            <EyeOutlined style={{marginRight: 8}}/>查看</Link>
         </div>
       )
     }
   },
 ];
+const name = {"key": "ID",
+  "title": '名称',
+  "owner": "申请人",
+  "ownerdate":"申请日期",
+  "check": "审核人",
+  "checkdate": "审核日期",
+  "img": '封面',
+  "money": "金额",
+  "bmoney":"预售金额",
+  "bdate":"预售日期",
+  "commission": "单人次佣金",
+  "number": "人数",
+  "feedback": "举报数",
+  "deadline":"截止日期",
+  "intro:":"介绍",
+  "type":"授课形式",
+  "src":"资料地址",
+  "connect":"联系方式",
+  "tel":"手机号",
+  "way":"付费方式"
+}
 
+const CurriculuReviewPage = props => {
+  const {courcespace, dispatch} = props;
+  const {dataSource} = courcespace;
 
+  useEffect(() => {
+    getData();
+  }, []);
 
-const dataSource =Array(100)
-  .fill(0, 0, 100)
-  .map((item, i) => {
-    return Mock.mock({
-      "key": i,
-      "img": 'https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png',
-      "title":  Mock.mock('@ctitle(3, 8)'),
-      "money|100-200": 100,
-      "commission|1-50": 20,
-      "number|1-50": 20,
-      "feedback|1-50": 20,
-      "owner": "张三",
-      "check": "张三",
-      "deadline": Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
-      "intro:":Mock.mock('@cparagraph()'),
-      "bdeadline":Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
-      "bmoney|100-200": 100,
-      "type|1":["在线","录制视频","面授"],
-      "src":"https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png",
-      "connect|1":["QQ","微信","手机号码"],
-      "tel":"12345678901",
-      "way|1":["付费开课","15%提成合作"],
-      }
-    )
-  });
-
-const CurriculuReviewPage = props=>{
-  const [data,setData] = useState(dataSource);
-
-  const onSearch = props=>{
-    console.log(props);
-    setData(data.filter(item=>item.title.indexOf(props)>=0))
+  const getData = ()=>{
+    dispatch({
+      type: 'courcespace/query',
+      payload:{page:1,size:10},
+    })
   }
 
-  const onReset = ()=>{
-    console.log(props);
-    setData(data);
+
+  const queryFun = (page, size) => {
+    dispatch({
+      type: 'courcespace/query',
+      payload: {page, size}
+    })
   }
 
-  return(<div style={{padding:"10px 50px"}}>
+  const onSearch = props => {
+    dispatch({
+      type: 'courcespace/search',
+      payload: {name: props},
+    })
+  }
+
+  const onReset = () => {
+    getData();
+  }
+
+  const exportExcel = () => {
+    try {
+      dispatch({
+        type: 'courcespace/all',
+        payload: {page:1, size:200} ,
+        callback:res=>{
+          if(res.status==="ok"){
+            const option = {};
+            option.fileName = 'course';
+            option.datas = [
+              {
+                sheetData: res.dataSource,
+                sheetName: 'sheet',
+                sheetFilter: Object.entries(name).map(i=>{return i[0]}),
+                sheetHeader: Object.entries(name).map(i=>{return i[1]}),
+              },
+            ];
+            const toExcel = new ExportJsonExcel(option);
+            toExcel.saveExcel();
+          }
+        }
+      })
+    }catch (e) {
+      console.error(e);
+    }
+  }
+
+  return (<div style={{padding: "10px 50px"}}>
     <Row style={{paddingBottom: 10}}>
       <Col span={24}>
         <Search
           // suffix={suffix}
           enterButton
           size="large"
-          style={{float:"right",width: 200}}
+          style={{float: "right", width: 300}}
           placeholder="课程名"
           onSearch={value => onSearch(value)}
         />
+       {/* <Button
+          size="large"
+          type={"primary"}
+          style={{float: "right", marginRight: "5px"}}
+          onClick={() => onReset()}
+        >
+          重置
+        </Button>*/}
         <Button
           size="large"
           type={"primary"}
-          style={{float:"right",marginRight: "5px"}}
-          onClick={()=>onReset()}
+          style={{float: "right", marginRight: "5px"}}
+          onClick={() => exportExcel()}
         >
-          重置
+          导出
         </Button>
       </Col>
     </Row>
-    <div style={{border:'1px solid #eee'}}>
+    <div style={{border: '1px solid #eee'}}>
       <Table
-        onChange={(pagination)=>{
-          console.log(pagination);
-
-        }}
-        style={{textAlign:'center'}}
+        style={{textAlign: 'center'}}
         columns={columns}
-        dataSource={data}
+        dataSource={dataSource}
         size={"small"}
         bordered={false}
-        pagination={{current:1,pageSize:20}}
-        scroll={{y:340}}
+        pagination={false}
+        scroll={{y: 340}}
       />
     </div>
 
-   {/* <Pagination
-      onChange={()=>{}}
-      onShowSizeChange={()=>{}}
-      size="small"
-      total={50}
-      showSizeChanger
-      showQuickJumper />*/}
+    <div style={{height: 50, width: '100%', padding: 10, backgroundColor: '#fafafa', border: '1px solid #eee'}}>
+      <Pagination
+        style={{float: 'right'}}
+        onChange={(page, pageSize) => {
+          queryFun(page, pageSize);
+        }}
+        onShowSizeChange={(current, size) => {
+          queryFun(current, size);
+        }}
+        size="large"
+        total={200}
+        showSizeChanger
+        showQuickJumper/>
+    </div>
   </div>)
 }
 
-export default CurriculuReviewPage;
+export default connect(({courcespace}) => ({courcespace}))(CurriculuReviewPage);
