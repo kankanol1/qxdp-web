@@ -1,4 +1,4 @@
-import {getTableData,queryData} from './service';
+import {getTableData,queryData,add} from './service';
 
 const Model = {
   namespace:'curriculu',
@@ -12,6 +12,12 @@ const Model = {
         type: 'change',
         payload: response,
       })
+    },
+    *add({payload,callback},{call,put}){
+      const response = yield call(add,payload);
+     if(callback && typeof callback ==='function'){
+       callback({status:'ok',data:response})
+      }
     },
     *query({payload},{call,put}){
       const response = yield call(queryData,payload);

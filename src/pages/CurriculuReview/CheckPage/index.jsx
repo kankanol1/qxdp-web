@@ -23,7 +23,7 @@ const UserFeedbackPage = props=>{
         <span>审核</span>
       </div>)
     }} title={false}>
-      <Card className={styles["advice-style"]}>
+      <Card className={styles["advice-style"]} style={{paddingTop:10}}>
       <Row>
         <Col span={10}>
             <img style={{ float:'right',width:300,height:350}} alt={"加载中..."} src={state.img}/>
@@ -84,16 +84,17 @@ const UserFeedbackPage = props=>{
               <Input.TextArea style={{width:"100%",height:50}} onChange={e=>console.log(e.target.value)}/>
             </Col>
           </Row>
+          <Row style={{marginTop:10}}>
+            <Col span={6} style={{textAlign:"right"}}>
+              <Button type={"primary"} size={"small"}>拒绝</Button>
+            </Col>
+            <Col offset={4} span={10} style={{textAlign:"left"}}>
+              <Button type={"primary"} size={"small"} >同意</Button>
+            </Col>
+          </Row>
         </Col>
       </Row>
-        <Row style={{marginTop:10}}>
-          <Col span={10} style={{textAlign:"right"}}>
-            <Button type={"primary"} size={"large"}>拒绝</Button>
-          </Col>
-          <Col offset={4} span={10} style={{textAlign:"left"}}>
-            <Button type={"primary"} size={"large"} >同意</Button>
-          </Col>
-        </Row>
+
       </Card>
 
     </PageHeaderWrapper>

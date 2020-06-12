@@ -1,4 +1,4 @@
-import {queryData,searchData,queryDataAll } from './service';
+import {queryData,searchData,queryDataAll } from '@/services/course';
 
 const Model = {
   namespace:'courcespace',

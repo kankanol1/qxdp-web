@@ -1,5 +1,5 @@
 import React from "react";
-import routes from '../../config/routes';
+// import routes from '../../config/routes';
 import { queryNotices } from '@/services/user';
 
 
@@ -8,13 +8,13 @@ const GlobalModel = {
   state: {
     collapsed: false,
     notices: [],
-    menuData:routes.map(i => {
+/*    menuData:routes.map(i => {
       i.icon = i.img;
       if(i.routes&&i.routes.length){
         i.routes=i.routes.map(j=>{j.icon=j.img;return j;})
       }
       return i;
-    }),
+    }),*/
   },
   effects: {
     *fetchNotices(_, { call, put, select }) {

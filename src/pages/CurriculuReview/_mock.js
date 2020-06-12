@@ -40,8 +40,9 @@ const getTableData=(req,res)=>{
     })});
 }
 const queryData=(req,res)=>{
+  let data = JSON.parse(JSON.stringify({dataSource})).dataSource.splice((req.query.page-1)*req.query.size,req.query.size)
   return res.json({
-    dataSource:JSON.parse(JSON.stringify({a:dataSource})).a.splice((req.query.page-1)*req.query.size,req.query.page*req.query.size)
+    dataSource:data
   });
 }
 

@@ -52,7 +52,6 @@ const studentfCom = props=>{
 
   const getCourses = ()=>{
     if(data&&data.key){
-      console.log(123);
       dispatch({
         type: 'students/courses',
         payload: {page:1, size:10,id:data.key},

@@ -3,10 +3,11 @@
  * To: More pain, more gain.
  */
 
-import React, {useEffect, useState} from 'react';
-import {Table,Pagination,Popover} from 'antd';
+import React, {useEffect} from 'react';
+import {Table,Button,Pagination,Popover} from 'antd';
 import {FormOutlined} from '@ant-design/icons';
 import {Link} from 'umi';
+import AddItemCom  from "./CheckPage/AddItemCom";
 import {connect} from 'dva';
 import './styles.less';
 
@@ -67,9 +68,7 @@ const CurriculuReviewPage = props=>{
   const {dataSource,} = curriculu;
 
   useEffect(()=>{
-    dispatch({
-      type:'curriculu/get',
-    })
+    queryFun(1,10);
   },[]);
 
 
@@ -107,6 +106,9 @@ const CurriculuReviewPage = props=>{
         showQuickJumper />
     </div>
 
+    <AddItemCom title={"添加"}>
+      <Button>添加</Button>
+    </AddItemCom>
   </div>)
 }
 

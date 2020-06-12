@@ -9,7 +9,7 @@ import {Button, Col, Popover, Row, Table, Tooltip} from 'antd';
 
 const IntroCom = props => {
   const {state} = props;
-  return (<>
+  return (<div style={{padding:20}}>
     <Row>
       <Col span={8} style={{textAlign: "right"}}>课程名称：</Col>
       <Col span={16}>{state.title}</Col>
@@ -85,18 +85,19 @@ const IntroCom = props => {
       <Col span={8} style={{textAlign: "right"}}>付费方式：</Col>
       <Col>{state.way}</Col>
     </Row>
-    <Row style={{marginTop: 10}}>
-      <Col span={10} style={{textAlign: "right"}}>
-        <Button type={"primary"} size={"large"}>关闭课程</Button>
-      </Col>
-      <Col offset={4} span={10} style={{textAlign: "left"}}>
-        <Button type={"primary"} size={"large"}>解散课程</Button>
-      </Col>
-    </Row>
     <Row>
-      <Col span={10} style={{textAlign: "right"}}>审核人：</Col>
+      <Col span={8} style={{textAlign: "right"}}>审核人：</Col>
       <Col>{state.check}</Col>
     </Row>
-  </>)
+    <Row style={{marginTop: 10}}>
+      <Col span={10} style={{textAlign: "right"}}>
+        <Button type={"primary"} size={"small"}>关闭课程</Button>
+      </Col>
+      <Col offset={4} span={10} style={{textAlign: "left"}}>
+        <Button type={"primary"} size={"small"}>解散课程</Button>
+      </Col>
+    </Row>
+
+  </div>)
 }
 export default IntroCom;

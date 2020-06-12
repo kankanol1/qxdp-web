@@ -172,6 +172,12 @@ export default {
               component: './UserManagement',
             },
             {
+              name: '用户管理',
+              path: '/users/manage',
+              hideInMenu:true,
+              component: './UserManagement/CheckPage',
+            },
+            {
               name: '人员管理',
               path: '/person',
               component: './PersonManagement',

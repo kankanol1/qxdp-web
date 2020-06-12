@@ -11,3 +11,9 @@ export async function queryData(payload){
     params:payload,
   });
 }
+export async function add(payload){
+  return request(`/api/sys/course/add`,{
+    method:'POST',
+    data:payload,
+  });
+}

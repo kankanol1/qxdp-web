@@ -13,7 +13,9 @@
 export default {
   dev: {
     '/api/': {
-      target: 'https://preview.pro.ant.design',
+      // target: 'https://preview.pro.ant.design',
+      target: 'http://localhost:8080/',
+
       changeOrigin: true,
       pathRewrite: {
         '^': '',
@@ -24,7 +26,7 @@ export default {
     '/api/': {
       // target: 'http://127.0.0.1:11000/',
       // target: 'http://192.168.1.4:11000/',
-      target: 'http://192.168.1.118:11000/',
+      // target: 'http://192.168.1.118:11000/',
       changeOrigin: true,
       pathRewrite: {
         '^': '',

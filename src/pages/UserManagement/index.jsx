@@ -70,7 +70,7 @@ const columns = [
     render: (text, row) => {
       return (
         <div>
-          <Link to={{pathname: "cources/manage", state: row}} style={{marginRight: 10}}>
+          <Link to={{pathname: "users/manage", state: row}} style={{marginRight: 10}}>
             <EyeOutlined style={{marginRight: 8}}/>查看</Link>
         </div>
       )
@@ -176,14 +176,6 @@ const UserManagementPage = props => {
           placeholder="昵称"
           onSearch={value => onSearch(value)}
         />
-       {/* <Button
-          size="large"
-          type={"primary"}
-          style={{float: "right", marginRight: "5px"}}
-          onClick={() => onReset()}
-        >
-          重置
-        </Button>*/}
         <Button
           size="large"
           type={"primary"}
