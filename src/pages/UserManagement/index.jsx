@@ -3,7 +3,7 @@
  * To: More pain, more gain.
  */
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'dva';
 import ExportJsonExcel from "js-export-excel";
 import {Button, Col, Input, Pagination, Popover, Row, Table, Tooltip} from "antd";
@@ -109,6 +109,7 @@ const name = {
 const UserManagementPage = props => {
   const {students, dispatch} = props;
   const {dataSource} = students;
+  const [heightY,setHeightY] = useState(window.innerHeight-270);
 
   useEffect(() => {
     getUsers();
@@ -164,8 +165,9 @@ const UserManagementPage = props => {
       console.error(e);
     }
   }
-
-
+  window.onresize = ()=>{
+    setHeightY(window.innerHeight-270);
+  }
   return (<div style={{padding: "10px 50px"}}>
     <Row style={{paddingBottom: 10}}>
       <Col span={24}>
@@ -192,9 +194,9 @@ const UserManagementPage = props => {
         columns={columns}
         dataSource={dataSource}
         size={"small"}
-        bordered={false}
+        bordered={true}
         pagination={false}
-        scroll={{y: 340}}
+        scroll={{y: heightY}}
       />
     </div>
 

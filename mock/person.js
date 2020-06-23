@@ -14,6 +14,7 @@ let dataSource =Array(100)
         "cash":  false,
         "total|23-3434":  2323,
 
+      "shl|0-23":20,
 
         "owner": "张三",
         "ownerdate":Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),
@@ -41,6 +42,7 @@ let dataSource =Array(100)
 
 const queryData=(req,res)=>{
   return res.json({
+    status:'ok',
     dataSource:[...dataSource].splice((req.query.page-1)*req.query.size,req.query.page*req.query.size)
   });
 }
@@ -64,9 +66,9 @@ const coursesa=(req,res)=>{
   });
 }
 export default {
-  'POST /api/students/query': queryData,
-  'POST /api/students/all': queryAllData,
-  'POST /api/students/search': searchData,
-  'POST /api/students/courses': courses,
-  'POST /api/students/coursesa': coursesa,
+  'POST /api/person/query': queryData,
+  'POST /api/person/all': queryAllData,
+  'POST /api/person/search': searchData,
+  'POST /api/person/courses': courses,
+  'POST /api/person/coursesa': coursesa,
 }

@@ -1,4 +1,4 @@
-import {getTableData,queryData,add} from './service';
+import {getTableData,queryData,add} from '@/services/curiculu';
 
 const Model = {
   namespace:'curriculu',

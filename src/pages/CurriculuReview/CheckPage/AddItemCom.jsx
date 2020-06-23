@@ -5,7 +5,7 @@
  */
 
 import React, {useState} from 'react';
-import {Modal, Form,Space, Select, Input, Button, Row, Col, Checkbox} from 'antd';
+import {Modal, Form, Select, Input, Button, Row, Col} from 'antd';
 import styles from './madal.less';
 import courseStyles from './madal.less';
 import {connect} from 'dva';

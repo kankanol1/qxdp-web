@@ -3,8 +3,8 @@
  * To: More pain, more gain.
  */
 
-import React, {useEffect} from 'react';
-import {Table,Button,Pagination,Popover} from 'antd';
+import React, {useEffect,useState} from 'react';
+import {Table,Pagination,Popover} from 'antd';
 import {FormOutlined} from '@ant-design/icons';
 import {Link} from 'umi';
 import AddItemCom  from "./CheckPage/AddItemCom";
@@ -66,6 +66,7 @@ const columns = [
 const CurriculuReviewPage = props=>{
   const {curriculu,dispatch} = props;
   const {dataSource,} = curriculu;
+  const [heightY,setHeightY]= useState(window.innerHeight-220);
 
   useEffect(()=>{
     queryFun(1,10);
@@ -79,6 +80,9 @@ const CurriculuReviewPage = props=>{
     })
   }
 
+  window.onresize = ()=>{
+    setHeightY(window.innerHeight-220);
+  }
 
   return(<div style={{margin:"10px 50px",border:'1px solid #eee'}}>
     <Table
@@ -86,10 +90,9 @@ const CurriculuReviewPage = props=>{
       columns={columns}
       dataSource={dataSource}
       size={"small"}
-      bordered={false}
-      // pagination={{current:1,pageSize:20}}
+      bordered={true}
       pagination={false}
-      scroll={{y:380}}
+      scroll={{y:heightY}}
     />
     <div style={{height:50,width:'100%',padding:10,backgroundColor:'#fafafa',borderTop:'1px solid #eee'}}>
       <Pagination
@@ -105,10 +108,6 @@ const CurriculuReviewPage = props=>{
         showSizeChanger
         showQuickJumper />
     </div>
-
-    <AddItemCom title={"添加"}>
-      <Button>添加</Button>
-    </AddItemCom>
   </div>)
 }
 

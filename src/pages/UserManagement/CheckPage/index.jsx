@@ -14,6 +14,7 @@ import StudentsCom from "../components/StudentsCom";
 import StudentfCom from "../components/StudentfCom";
 import styles from '../styles.less'
 const { TabPane } = Tabs;
+
 const UserFeedbackPage = props => {
   const {location,dispatch} = props;
   const {state} = location;
@@ -34,25 +35,13 @@ const UserFeedbackPage = props => {
           </Col>
           <Col span={12}>
             <Tabs defaultActiveKey="1">
-              <TabPane tab="本课程学生" key="1">
+              <TabPane tab="佣金收入" key="1">
                 <StudentsCom title={"佣金收入：20"} data={state}/>
               </TabPane>
-              <TabPane tab="举报人" key="2">
+              <TabPane tab="开课收入" key="2">
                 <StudentfCom title={"课程收入：30"} data={state}/>
               </TabPane>
             </Tabs>
-            {/*<div className="aaa">
-              <Row>
-                <Col span={24}>
-                  <StudentsCom title={"佣金收入：20"} data={state}/>
-                </Col>
-              </Row>
-              <Row style={{marginTop:10}}>
-                <Col span={24}>
-                  <StudentfCom title={"课程收入：30"} data={state}/>
-                </Col>
-              </Row>
-            </div>*/}
           </Col>
         </Row>
       </div>

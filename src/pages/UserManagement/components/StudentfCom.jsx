@@ -11,23 +11,23 @@ import ExportJsonExcel from "js-export-excel";
 
 const columns = [
   {
-    title: '头像',
+    title: '封面',
     dataIndex: 'img',
     key: 'img',
     render: (text, row) => {
       return (
         <div style={{width: 50, margin: '0 auto'}}>
           <Popover placement="right" style={{border: '1px solid #eee'}} content={() => (
-            <div style={{width: 100, margin: '0 auto'}}><img style={{width: 100, height: 100,borderRadius:"50%"}} alt="example"
-                                                             src={text}/></div>)} title="头像">
-            <img style={{width: 30, height: 30,borderRadius:"50%"}} alt="example" src={text}/>
+            <div style={{margin: '0 auto'}}><img style={{width: 300, height: 400}} alt="example"
+                                                             src={text}/></div>)} title="封面">
+            <img style={{width: 30, height: 30}} alt="example" src={text}/>
           </Popover>
         </div>
       )
     }
   },
   {
-    title: '昵称',
+    title: '课程名',
     dataIndex: 'title',
     key: 'title',
   },
@@ -46,6 +46,7 @@ const name = {
 const studentfCom = props=>{
   const {data,title,dispatch} = props;
   const [dataSource,setDataSource] = useState([]);
+  const [heightY,setHeightY] = useState(window.innerHeight-360>670?670:window.innerHeight-360);
   useEffect(()=>{
     getCourses();
   }, [])
@@ -102,6 +103,9 @@ const studentfCom = props=>{
       })
     }
   }
+  window.onresize=()=>{
+    setHeightY(window.innerHeight-360>670?670:window.innerHeight-360);
+  }
   return (<div style={{boxShadow:'2px 2px 4px #999'}}>
     <div style={{border: '1px solid #eee'}}>
       <div style={{padding:'2px 10px',borderBottom:'1px solid #eee'}}>
@@ -115,10 +119,10 @@ const studentfCom = props=>{
         size={"small"}
         bordered={false}
         pagination={false}
-        scroll={{y: 260}}
+        scroll={{y: heightY}}
       />
     </div>
-    <div style={{height: 30, width: '100%', paddingRight: 10, backgroundColor: '#fafafa', border: '1px solid #eee'}}>
+    <div style={{height: 40, width: '100%', paddingRight: 10, backgroundColor: '#fafafa', border: '1px solid #eee'}}>
       <Pagination
         style={{float: 'right'}}
         onChange={(page, pageSize) => {

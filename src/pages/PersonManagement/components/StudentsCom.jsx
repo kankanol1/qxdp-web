@@ -5,8 +5,9 @@
  */
 import React, {useEffect, useState} from 'react';
 import {connect} from 'dva';
-import {Col,Button, Pagination, Popover, Table} from 'antd';
+import {Pagination, Popover, Table} from 'antd';
 import ExportJsonExcel from "js-export-excel";
+import request from "@/utils/request";
 
 
 /*const columns = [
@@ -39,35 +40,30 @@ import ExportJsonExcel from "js-export-excel";
 ];*/
 const columns = [
   {
-    title: '封面',
+    title: '头像',
     dataIndex: 'img',
     key: 'img',
     render: (text, row) => {
       return (
         <div style={{width: 50, margin: '0 auto'}}>
           <Popover placement="right" style={{border: '1px solid #eee'}} content={() => (
-            <div style={{ margin: '0 auto'}}><img style={{width: 300, height: 400}} alt="example"
-                                                             src={text}/></div>)} title="封面">
-            <img style={{width: 30, height: 30}} alt="example" src={text}/>
+            <div style={{width: 100, margin: '0 auto',}}><img style={{width: 100, height: 100,borderRadius:"50%"}} alt="example"
+                                                              src={text}/></div>)} title="头像">
+            <img style={{width: 30, height: 30,borderRadius:"50%"}} alt="example" src={text}/>
           </Popover>
         </div>
       )
     }
   },
   {
-    title: '课程名',
+    title: '昵称',
     dataIndex: 'title',
     key: 'title',
   },
   {
-    title: '截止时间',
-    dataIndex: 'deadline',
-    key: 'deadline',
-  },
-  {
-    title: '佣金收入',
-    dataIndex: 'yjsr',
-    key: 'yjsr',
+    title: '审核数量',
+    dataIndex: 'checks',
+    key: 'checks',
   },
 ];
 const name = {
@@ -85,19 +81,26 @@ const studentsCom = props=>{
   }, [])
 
   const getCourses = ()=>{
-    if(data&&data.key){
-      console.log(123);
-      dispatch({
-        type: 'students/courses',
-        payload: {page:1, size:10,id:data.key},
-        callback: res=>{
-          if(res.status==='ok'){
-            setDataSource(res.dataSource)
-          }
+      request('/api/person/query',{
+        method:"POST",
+        params: {page:1, size:10},
+      }).then(res=>{
+        if(res.status==='ok'){
+          setDataSource(res.dataSource)
         }
       })
-    }
   }
+  const queryFun = (page, size) => {
+    request('/api/person/query',{
+      method:"POST",
+      params: {page, size},
+    }).then(res=>{
+      if(res.status==='ok'){
+        setDataSource(res.dataSource)
+      }
+    })
+  }
+
   const exportExcel = () => {
     try {
       dispatch({
@@ -124,28 +127,15 @@ const studentsCom = props=>{
       console.error(e);
     }
   }
-  const queryFun = (page, size) => {
-    if(data&&data.key){
-      dispatch({
-        type: 'student/courses',
-        payload: {page, size,id:data.key},
-        callback: res=>{
-          if(res.status==='ok'){
-            setDataSource(res.dataSource)
-          }
-        }
-      })
-    }
-  }
+
   window.onresize=()=>{
     setHeightY(window.innerHeight-360>670?670:window.innerHeight-360);
   }
   return (<div style={{boxShadow:'2px 2px 4px #999'}}>
-    <div style={{border: '1px solid #eee'}}>
-      <div style={{padding:'2px 10px',borderBottom:'1px solid #eee'}}>
-        <span>{title}</span>
+    <div>
+     {/* <div style={{padding:'2px 10px',borderBottom:'1px solid #eee'}}>
         <Button style={{float:"right"}} type={"primary"} size={"small"} onClick={()=>exportExcel()}>导出</Button>
-      </div>
+      </div>*/}
       <Table
         style={{textAlign: 'center'}}
         columns={columns}
@@ -156,7 +146,7 @@ const studentsCom = props=>{
         scroll={{y: heightY}}
       />
     </div>
-    <div style={{height: 40, width: '100%', paddingRight: 10, backgroundColor: '#fafafa', border: '1px solid #eee'}}>
+    <div style={{height: 40, width: '100%', padding: "5px 10px", backgroundColor: '#fafafa', border: '1px solid #eee'}}>
       <Pagination
         style={{float: 'right'}}
         onChange={(page, pageSize) => {

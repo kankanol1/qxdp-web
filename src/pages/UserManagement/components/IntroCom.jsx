@@ -4,7 +4,7 @@
  * To: More pain, more gain.
  */
 import React from 'react';
-import {Row, Radio, Col} from 'antd';
+import {Row, Radio, Col, Checkbox} from 'antd';
 
 const IntroCom = props => {
   const {state} = props;
@@ -34,14 +34,17 @@ const IntroCom = props => {
       </Col>
     </Row>
     <Row style={{marginTop:30}}>
-      <Col span={24}>
-        <Radio value={1}>禁止开课</Radio>
+      <Col span={12}>
+        <Checkbox value={1} key={1} onChange={e=>{
+          console.log(e.target.checked);
+        }}>禁止开课</Checkbox>
       </Col>
-    </Row><Row>
-    <Col span={24}>
-      <Radio value={2}>禁止提现</Radio>
-    </Col>
-  </Row>
+      <Col span={12}>
+        <Checkbox onChange={e=>{
+          console.log(e.target.checked);
+        }} value={2} key={1}>禁止提现</Checkbox>
+      </Col>
+    </Row>
   </div>)
 }
 export default IntroCom;

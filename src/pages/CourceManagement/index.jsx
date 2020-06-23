@@ -21,7 +21,10 @@ const suffix = (
     }}
   />
 );
-
+const layout = {
+  labelCol: {span: 12},
+  wrapperCol: {span: 12},
+};
 const columns = [
   {
     title: '标题',
@@ -109,6 +112,7 @@ const name = {"key": "ID",
 const CurriculuReviewPage = props => {
   const {courcespace, dispatch} = props;
   const {dataSource} = courcespace;
+  const [heightY,setHeightY] = useState(window.innerHeight-270);
 
   useEffect(() => {
     getData();
@@ -166,7 +170,9 @@ const CurriculuReviewPage = props => {
       console.error(e);
     }
   }
-
+  window.onresize = ()=>{
+    setHeightY(window.innerHeight-270);
+  }
   return (<div style={{padding: "10px 50px"}}>
     <Row style={{paddingBottom: 10}}>
       <Col span={24}>
@@ -202,9 +208,9 @@ const CurriculuReviewPage = props => {
         columns={columns}
         dataSource={dataSource}
         size={"small"}
-        bordered={false}
+        bordered={true}
         pagination={false}
-        scroll={{y: 340}}
+        scroll={{y: heightY}}
       />
     </div>
 

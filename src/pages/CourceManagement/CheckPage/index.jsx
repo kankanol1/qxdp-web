@@ -19,7 +19,7 @@ const UserFeedbackPage = props => {
   const {location,dispatch} = props;
   const {state} = location;
 
-  return (<div style={{paddingTop: 20}}>
+  return (<div style={{padding: 20}}>
     <PageHeaderWrapper pageHeaderRender={e => {
       const data = e.breadcrumb.routes;
       return (<div style={{paddingTop: 20, paddingLeft: 20}}>

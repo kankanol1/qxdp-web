@@ -46,13 +46,14 @@ const name = {
 const studentfCom = props=>{
   const {data,title,dispatch} = props;
   const [dataSource,setDataSource] = useState([]);
+  const [heightY,setHeightY] = useState(window.innerHeight-360>670?670:window.innerHeight-360);
+
   useEffect(()=>{
     getCourses();
   }, [])
 
   const getCourses = ()=>{
     if(data&&data.key){
-      console.log(123);
       dispatch({
         type: 'students/courses',
         payload: {page:1, size:10,id:data.key},
@@ -103,6 +104,10 @@ const studentfCom = props=>{
       })
     }
   }
+  window.onresize=()=>{
+    setHeightY(window.innerHeight-360>670?670:window.innerHeight-360);
+  }
+
   return (<div style={{boxShadow:'2px 2px 4px #999'}}>
     <div style={{border: '1px solid #eee'}}>
       <div style={{padding:'2px 10px',borderBottom:'1px solid #eee'}}>
@@ -116,10 +121,10 @@ const studentfCom = props=>{
         size={"small"}
         bordered={false}
         pagination={false}
-        scroll={{y: 260}}
+        scroll={{y: heightY}}
       />
     </div>
-    <div style={{height: 30, width: '100%', paddingRight: 10, backgroundColor: '#fafafa', border: '1px solid #eee'}}>
+    <div style={{height: 40, width: '100%', padding: '5px 10px', backgroundColor: '#fafafa', border: '1px solid #eee'}}>
       <Pagination
         style={{float: 'right'}}
         onChange={(page, pageSize) => {
