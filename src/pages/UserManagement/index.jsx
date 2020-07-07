@@ -168,6 +168,9 @@ const UserManagementPage = props => {
   window.onresize = ()=>{
     setHeightY(window.innerHeight-270);
   }
+
+
+
   return (<div style={{padding: "10px 50px"}}>
     <Row style={{paddingBottom: 10}}>
       <Col span={24}>

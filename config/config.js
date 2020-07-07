@@ -181,6 +181,11 @@ export default {
               name: '人员管理',
               path: '/person',
               component: './PersonManagement',
+            },{
+              name: '人员管理',
+              path: '/person/manage',
+              hideInMenu:true,
+              component: './PersonManagement/CheckPage',
             },
             {
               component: './404',

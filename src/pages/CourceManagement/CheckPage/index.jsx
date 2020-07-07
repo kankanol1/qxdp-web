@@ -9,16 +9,42 @@ import { DoubleLeftOutlined} from '@ant-design/icons';
 import {Link} from 'umi';
 import {connect} from 'dva';
 import IntroCom from "@/pages/CourceManagement/components/IntroCom";
-import {Row, Col,Tabs} from 'antd';
+import {Row, Col, Tabs, Button} from 'antd';
 import StudentsCom from "@/pages/CourceManagement/components/StudentsCom";
 import StudentfCom from "@/pages/CourceManagement/components/StudentfCom";
 import styles from '../styles.less'
+import ExportJsonExcel from "js-export-excel";
 const { TabPane } = Tabs;
 
 const UserFeedbackPage = props => {
   const {location,dispatch} = props;
   const {state} = location;
-
+  const exportExcel = () => {
+    try {
+      dispatch({
+        type: 'students/courcesa',
+        payload: {page:1, size:200} ,
+        callback:res=>{
+          if(res.status==="ok"){
+            const option = {};
+            option.fileName = 'course';
+            option.datas = [
+              {
+                sheetData: res.dataSource,
+                sheetName: 'sheet',
+                sheetFilter: Object.entries(name).map(i=>{return i[0]}),
+                sheetHeader: Object.entries(name).map(i=>{return i[1]}),
+              },
+            ];
+            const toExcel = new ExportJsonExcel(option);
+            toExcel.saveExcel();
+          }
+        }
+      })
+    }catch (e) {
+      console.error(e);
+    }
+  }
   return (<div style={{padding: 20}}>
     <PageHeaderWrapper pageHeaderRender={e => {
       const data = e.breadcrumb.routes;
@@ -34,7 +60,10 @@ const UserFeedbackPage = props => {
             <IntroCom state={state}/>
           </Col>
           <Col span={12}>
-            <Tabs defaultActiveKey="1">
+            <Tabs
+              defaultActiveKey="1"
+              tabBarExtraContent={<Button type={"primary"} onClick={()=>exportExcel(state)}>导出</Button>}
+            >
               <TabPane tab="本课程学生" key="1">
                 <StudentsCom title={"本课程学生"} data={state}/>
               </TabPane>

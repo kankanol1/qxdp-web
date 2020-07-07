@@ -4,7 +4,7 @@ let dataSource =Array(100)
   .fill(0, 0, 100)
   .map((item, i) => {
     return Mock.mock({
-        "key": i,
+        "key": i+1,
         "title":  Mock.mock('@ctitle(3, 8)'),
         "owner": "张三",
         "ownerdate":Mock.mock('@now("yyyy-MM-dd mm:hh:ss")'),

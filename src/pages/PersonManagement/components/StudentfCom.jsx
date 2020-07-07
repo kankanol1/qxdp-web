@@ -5,32 +5,36 @@
  */
 import React, {useEffect, useState} from 'react';
 import {connect} from 'dva';
-import {Col,Button, Pagination, Popover, Table} from 'antd';
-import ExportJsonExcel from "js-export-excel";
+import {Pagination, Popover, Table} from 'antd';
 import request from "@/utils/request";
-
 
 const columns = [
   {
-    title: '封面',
+    title: '头像',
     dataIndex: 'img',
     key: 'img',
     render: (text, row) => {
       return (
         <div style={{width: 50, margin: '0 auto'}}>
           <Popover placement="right" style={{border: '1px solid #eee'}} content={() => (
-            <div style={{margin: '0 auto'}}><img style={{width: 300, height: 400}} alt="example"
-                                                             src={text}/></div>)} title="封面">
-            <img style={{width: 30, height: 30}} alt="example" src={text}/>
+            <div style={{width: 100, margin: '0 auto',}}><img style={{width: 100, height: 100, borderRadius: "50%"}}
+                                                              alt="example"
+                                                              src={text}/></div>)} title="头像">
+            <img style={{width: 30, height: 30, borderRadius: "50%"}} alt="example" src={text}/>
           </Popover>
         </div>
       )
     }
   },
   {
-    title: '课程名',
+    title: '昵称',
     dataIndex: 'title',
     key: 'title',
+  },
+  {
+    title: '审核数量',
+    dataIndex: 'checks',
+    key: 'checks',
   },
   {
     title: '手机号',
@@ -38,77 +42,35 @@ const columns = [
     key: 'tel',
   },
 ];
-const name = {
-  "key": "ID",
-  "img": '头像',
-  "title": '昵称',
-  "tel":"手机号",
-}
-const studentfCom = props=>{
-  const {data,title,dispatch} = props;
+
+const studentfCom = (props)=>{
+  const {type} = props;
   const [dataSource,setDataSource] = useState([]);
+  const [page,setPage] = useState({});
   const [heightY,setHeightY] = useState(window.innerHeight-360>670?670:window.innerHeight-360);
+
   useEffect(()=>{
-    getCourses();
+    queryFun(1, 10);
   }, [])
 
-  const getCourses = ()=>{
-    request('/api/person/query',{
-      method:"POST",
-      params: {page:1, size:10},
-    }).then(res=>{
-      if(res.status==='ok'){
-        setDataSource(res.dataSource)
-      }
-    })
-  }
   const queryFun = (page, size) => {
-    request('/api/person/query',{
+    request('/api/person/'+type,{
       method:"POST",
-      params: {page, size},
+      params: {page, size,role:type},
     }).then(res=>{
       if(res.status==='ok'){
         setDataSource(res.dataSource)
+        if (res.page) setPage(res.page);
       }
     })
-  }
-
-  const exportExcel = () => {
-    try {
-      dispatch({
-        type: 'students/courcesa',
-        payload: {page:1, size:200} ,
-        callback:res=>{
-          if(res.status==="ok"){
-            const option = {};
-            option.fileName = 'course';
-            option.datas = [
-              {
-                sheetData: res.dataSource,
-                sheetName: 'sheet',
-                sheetFilter: Object.entries(name).map(i=>{return i[0]}),
-                sheetHeader: Object.entries(name).map(i=>{return i[1]}),
-              },
-            ];
-            const toExcel = new ExportJsonExcel(option);
-            toExcel.saveExcel();
-          }
-        }
-      })
-    }catch (e) {
-      console.error(e);
-    }
   }
 
   window.onresize=()=>{
     setHeightY(window.innerHeight-360>670?670:window.innerHeight-360);
   }
+
   return (<div style={{boxShadow:'2px 2px 4px #999'}}>
     <div style={{border: '1px solid #eee'}}>
-      {/*<div style={{padding:'2px 10px',borderBottom:'1px solid #eee'}}>
-        <span>{title}</span>
-        <Button style={{float:"right"}} type={"primary"} size={"small"} onClick={()=>exportExcel()}>导出</Button>
-      </div>*/}
       <Table
         style={{textAlign: 'center'}}
         columns={columns}
@@ -116,7 +78,7 @@ const studentfCom = props=>{
         size={"small"}
         bordered={false}
         pagination={false}
-        scroll={{y: heightY}}
+        scroll={{y: heightY,scrollToFirstRowOnChange: true}}
       />
     </div>
     <div style={{height: 40, width: '100%', paddingRight: 10, backgroundColor: '#fafafa', border: '1px solid #eee'}}>
@@ -129,7 +91,7 @@ const studentfCom = props=>{
           queryFun(current, size);
         }}
         size="small"
-        total={200}
+        total={page.total||1}
         showSizeChanger
         showQuickJumper/>
     </div>

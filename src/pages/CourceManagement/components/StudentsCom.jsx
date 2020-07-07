@@ -110,10 +110,10 @@ const studentsCom = props=>{
   }
   return (<div style={{boxShadow:'2px 2px 4px #999'}}>
     <div style={{border: '1px solid #eee'}}>
-      <div style={{padding:'2px 10px',borderBottom:'1px solid #eee'}}>
+     {/* <div style={{padding:'2px 10px',borderBottom:'1px solid #eee'}}>
         <span>{title}</span>
         <Button style={{float:"right"}} type={"primary"} size={"small"} onClick={()=>exportExcel()}>导出</Button>
-      </div>
+      </div>*/}
       <Table
         style={{textAlign: 'center'}}
         columns={columns}
