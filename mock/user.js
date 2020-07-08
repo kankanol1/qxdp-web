@@ -159,14 +159,6 @@ export default {
   'POST /api/general/user/management/li/nm':{
     status:1,
     type:'admin',
-    currentAuthority:[
-      'admin',
-      'user','doors1','doors2','doors3',
-      'sales1','sales2','sales3','sales4',
-      'product1','product2','product3','product4',
-      'human1','human2','human3','human4',
-      'office1','office2','office3','office4',
-      'data',
-      'authority']
+    currentAuthority:['admin',]
   },
 };

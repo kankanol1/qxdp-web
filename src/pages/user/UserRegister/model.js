@@ -1,4 +1,4 @@
-import { fakeRegister ,verification} from './service';
+import { fakeRegister ,verification,saveOne} from './service';
 const Model = {
   namespace: 'userAndUserRegister',
   state: {
@@ -22,6 +22,15 @@ const Model = {
         }
       }
     },
+    *save({ payload,callback}, { call, put }){
+      // console.log("model",payload);
+      const response = yield call(saveOne, payload);
+      if(callback&&typeof callback==='function'){
+        if(callback&& typeof callback==='function'){
+          callback({status:'ok',data:response});
+        }
+      }
+    }
   },
   reducers: {
     registerHandle(state, { payload }) {

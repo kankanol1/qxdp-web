@@ -21,7 +21,8 @@ import {
   UserOutlined,
   LockOutlined
 } from '@ant-design/icons';
-
+import request from "@/utils/request";
+import router from "umi/router";
 
 const formItemLayout = {
   labelCol: {
@@ -62,99 +63,32 @@ const tailFormItemLayout = {
 const icon = {color: 'rgb(24, 144, 255)'};
 const userlist = {
   user: {
-    username: 'gl2020',
-    email: 'email@qq.com',
-    tel: '0531-3456784',
+    name: 'gl2020',
     password: 'gl2020',
-    confirm: 'gl2020',
-    invitationCode: 'gl2020',
+    role:'管理员',
+
   }
 };
 
 
 const RegistrationForm = (props) => {
-  const {dispatch,userAndUserRegister, submitting, history} = props;
-  const [values, setValues] = useState(undefined);
-  const [key, setKey] = useState(undefined);
-  const [chl, setChl] = useState(undefined);
+  const {userAndUserRegister, submitting, dispatch,history} = props;
   const [form] = Form.useForm();
-  const [data, setData] = useState(undefined);
-  const [verification, setVerification] = useState(false);
   const {emailList}=userAndUserRegister;
 
-  useEffect(() => {
-    if (verification && values && data && chl && key) {
-      const tid = new Date().getTime();
-      const param = {
-        "chl": (tid % 1024) << 6,
-        "ful": location.href,
-        "ic": values.ic,
-        "pd": Algorithm.decodePw(chl, data.rk, key, values.pd),
-        "rid": RID,
-        tid,
-        "un": values.un,
-        "tel": values.tel,
-        "email": values.email,
-      };
-      dispatch({
-        type: 'userAndUserRegister/submit',
-        payload: param,
-        callback: res => {
-          if (res && ((res.status & 0b11) === 0b01)) {
-            setVerification(false);
-            history.push(
-              {
-                pathname: '/user/result',
-                // state: {account: values.user.email},
-              }
-            );
-          }
-        }
-      }).catch((err) => {
-        console.log(err);
-      })
-    }
-  }, [verification]);
-
   const onFinish = values => {
-    if (dispatch && values) {
-      const params = {
-        un: values.user.username,
-        em: values.user.email,
-        email: values.user.email,
-        tel: values.user.tel,
-        pd: values.user.password,
-        ic: Algorithm.stringToHex(values.user.invitationCode).join('').split('').reverse().join(''),
-      };
-      setValues(params);
-      const key = Algorithm.keyCreate(8);
-      setKey(key);
-      const tid = new Date().getTime();
-      const chl = (tid % 1024) << 6;
-      setChl(chl);
-      const props = {
-        chl,
-        did: Algorithm.stringToHex(key).join('').split('').reverse().join(''),
-        ful: location.href,
-        rid: RID,
-        tid,
-        un: params.un,
-        ic: params.ic,
-      };
-      dispatch({
-        type: 'userAndUserRegister/verification',
-        payload: props,
-        callback: res => {
-          if ((res.status & 0b11) === 0b01 && res.data.ued) {
-            setData(res.data);
-            setVerification(true);
-          } else {
-            message.destroy();
-            message.warning(res.msg);
-          }
-        }
-      })
-    }
+    delete values.confirm;
+    request("/api/user/saveOne",{
+      method:'POST',
+      params:values,
+    }).then(res=>{
+      if(res.status==='ok'){
+        message.info({content:"注册成功，即将前往登录页！",onClose:()=>{
+          router.push("/user/login");
+          }});
+      }
+      console.log(res);
+    })
   };
   const onReset = () => {
     form.resetFields();
@@ -184,7 +118,7 @@ const RegistrationForm = (props) => {
       >
         <Form.Item
           {...formItemLayout}
-          name={["user", "username"]}
+          name={["name"]}
           label="账号："
           rules={[{
             required: true,
@@ -195,48 +129,17 @@ const RegistrationForm = (props) => {
           <Input allowClear prefix={<UserOutlined style={icon}/>}/>
         </Form.Item>
         <Form.Item
-          name={["user", "email"]}
-          label="邮箱："
-          rules={[
-            {
-              type: 'email',
-              message: '邮箱格式不正确!',
-            },
-            {
-              required: true,
-              message: '请输入邮箱!',
-            },
-          ]}
-        >
-          <AutoComplete
-            options={emailOptions}
-            onChange={onEmailChange}
-          >
-            <Input prefix={<MailOutlined style={icon}/>} allowClear suffix={
-              <Tooltip title="邮箱也可以手动填写">
-                <InfoCircleOutlined style={{color: 'rgba(0,0,0,.45)'}}/>
-              </Tooltip>
-            }/>
-          </AutoComplete>
-        </Form.Item>
-        <Form.Item
-          name={["user", "tel"]}
-          label="电话："
-          rules={[
-            {
-              required: true, message: '请输正确的联系方式!',
-              pattern:/((\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$)/,
-            },
-          ]}
+          name={["role"]}
+          label="角色"
+          rules={[{required: true,},]}
         >
           <Input
-            prefix={<MobileOutlined style={icon}/>}
             allowClear
             style={{width: '100%',}}
           />
         </Form.Item>
         <Form.Item
-          name={["user", "password"]}
+          name={["password"]}
           label="密码："
           {...formItemLayout}
           rules={[
@@ -252,9 +155,9 @@ const RegistrationForm = (props) => {
           />
         </Form.Item>
         <Form.Item
-          name={[['user', 'confirm']]}
+          name={['confirm']}
           label="确认："
-          dependencies={['user', 'password']}
+          dependencies={['password']}
           hasFeedback
           {...formItemLayout}
           rules={[
@@ -264,7 +167,7 @@ const RegistrationForm = (props) => {
             },
             ({getFieldValue}) => ({
               validator(rule, value) {
-                if (!value || getFieldValue(['user', 'password']) === value) {
+                if (!value || getFieldValue(['password']) === value) {
                   return Promise.resolve();
                 }
                 // eslint-disable-next-line prefer-promise-reject-errors
@@ -275,22 +178,8 @@ const RegistrationForm = (props) => {
         >
           <Input.Password placeholder="请确认密码" prefix={<UnlockOutlined style={icon}/>} allowClear/>
         </Form.Item>
-        <Form.Item
-          {...formItemLayout}
-          name={["user", "invitationCode"]}
-          label="邀请码："
-          rules={[{required: true, message: '邀请码!',},]}
-        >
-          <Input
-            prefix={<MobileOutlined style={icon}/>}
-            allowClear
-            style={{width: '100%',}}
-          />
-        </Form.Item>
+
         <Form.Item {...tailFormItemLayout} style={{marginBottom: 0, marginTop: '-16px'}}>
-          <a onClick={onReset}>
-            清空
-          </a>
           <Link style={{float: 'right'}} to='/user/login'>
             已有账户返回登录
           </Link>

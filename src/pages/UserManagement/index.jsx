@@ -6,10 +6,11 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'dva';
 import ExportJsonExcel from "js-export-excel";
-import {Button, Col, Input, Pagination, Popover, Row, Table, Tooltip} from "antd";
+import {Button, Col, Input,Space, Pagination, Popover, Row, Table, Tooltip} from "antd";
 import {Link} from "umi";
 import {EyeOutlined} from "@ant-design/icons";
-import Mock from "mockjs";
+import AddUserModal from "@/pages/UserManagement/components/AddUserModal";
+
 const {Search} = Input;
 
 
@@ -62,7 +63,6 @@ const columns = [
     dataIndex: 'money',
     key: 'money',
   },
-
   {
     title: '操作',
     dataIndex: 'action',
@@ -91,7 +91,6 @@ const name = {
   "ownerdate":"申请日期",
   "check": "审核人",
   "checkdate": "审核日期",
-
   "money": "金额",
   "bmoney":"预售金额",
   "bdate":"预售日期",
@@ -139,6 +138,9 @@ const UserManagementPage = props => {
     getUsers()
   }
 
+  const addUser =()=>{
+
+  }
   const exportExcel = () => {
     try {
       dispatch({
@@ -174,21 +176,23 @@ const UserManagementPage = props => {
   return (<div style={{padding: "10px 50px"}}>
     <Row style={{paddingBottom: 10}}>
       <Col span={24}>
+        <Space size={'small'} style={{float: "right", marginRight: "5px"}}>
+          <AddUserModal>
+            <Button size="large" type={"primary"} onClick={() => addUser()}>
+              添加
+            </Button>
+          </AddUserModal>
+          <Button size="large" type={"primary"} onClick={() => exportExcel()}>
+            导出
+          </Button>
         <Search
           enterButton
           size="large"
-          style={{float: "right", width: 300}}
+          style={{ width: 300}}
           placeholder="昵称"
           onSearch={value => onSearch(value)}
         />
-        <Button
-          size="large"
-          type={"primary"}
-          style={{float: "right", marginRight: "5px"}}
-          onClick={() => exportExcel()}
-        >
-          导出
-        </Button>
+        </Space>
       </Col>
     </Row>
     <div style={{border: '1px solid #eee'}}>

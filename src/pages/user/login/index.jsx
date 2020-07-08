@@ -1,4 +1,4 @@
-import {Form, message, Input, Button, Checkbox, Tooltip} from 'antd';
+import {Form, message,Select, Input, Button, Checkbox, Tooltip} from 'antd';
 import React, {useState, useEffect, useRef} from 'react';
 import {connect} from 'dva';
 import styles from './style.less';
@@ -9,6 +9,7 @@ import {Link} from "umi";
 import Cookie from "@/utils/cookies";
 import clientType from '@/utils/clientType';
 import allKey from "@/utils/key";
+import request from "@/utils/request";
 
 const layout = {
   wrapperCol: {
@@ -21,45 +22,26 @@ const tailLayout = {
   },
 };
 const icon = {color: 'rgb(24, 144, 255)'};
-
+const {Option} = Select;
 const Login = props => {
   const {submitting, dispatch} = props;
   const [autoLogin, setAutoLogin] = useState(true);
-  const [submit, setSubmit] = useState(false);
-  const [values, setValues] = useState(undefined);
-  const [key, setKey] = useState(undefined);
-  const [data, setData] = useState(undefined);
-  const [chl, setChl] = useState(undefined);
 
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    if (data && submit && values && chl && key) {
-      const tid = new Date().getTime();
-      const params = {
-        "chl": (tid % 1024) << 6,
-        "ful": location.href,
-        "pd": Algorithm.decodePw(chl, data.rk, key, values.password),
-        "rid": RID,
-        "password": values.password,
-        "remember": values.remember,
-        tid,
-        tp: values.tp,
-        "un": values.userName,
-      };
-      dispatch({
-        type: 'login/loginnm',
-        payload: params,
-        callback: res => {
-          console.log(res);
-        },
-      });
-      setSubmit(false);
-    }
-  }, [submit]);
-
   const handleOk = values => {
-    values.tp = clientType.client();
+    request("/api/user/getByNameAndRole",{
+      method:'POST',
+      params:values,
+    }).then(res=>{
+      if(res.status==='ok'){
+        dispatch({
+          type:'login/logp',
+          response:res,
+        })
+      }
+    })
+   /* values.tp = clientType.client();
     values.remember = autoLogin;
     console.log(values);
     setValues(values);
@@ -90,7 +72,7 @@ const Login = props => {
           setSubmit(false);
         }
       }
-    });
+    });*/
   };
 
   const onFinishFailed = errorInfo => {
@@ -100,7 +82,6 @@ const Login = props => {
 
   return (
     <div className={styles.main}>
-      {/*<h3 style={{textAlign: 'center', color: '#0189ff'}}>账户密码登录</h3>*/}
       <Form
         {...layout}
         form={form}
@@ -112,16 +93,21 @@ const Login = props => {
         onFinish={handleOk}
         onFinishFailed={onFinishFailed}
       >
-        <Form.Item name="userName" label="账号" rules={[{required: true, message: '密码不可为空！'}]}>
-          {/*<Input  prefix={<UserOutlined style={icon}/>} placeholder="example@gl-data" size="large" suffix={<Tooltip title="必须以公司二级域名为后缀！"><InfoCircleOutlined style={{color: 'rgba(0,0,0,.45)'}}/></Tooltip>}/>*/}
+        <Form.Item name="name" label="账号" rules={[{required: true, message: '账号不可为空！'}]}>
           <Input prefix={<UserOutlined style={icon}/>} placeholder="gl2020" suffix={<Tooltip title="请填写正确账号"><InfoCircleOutlined style={{color: 'rgba(0,0,0,.45)'}}/></Tooltip>}/>
         </Form.Item>
         <Form.Item name="password" label="密码" rules={[{required: true, message: '密码不可为空！'}]}>
           <Input.Password  prefix={<LockOutlined style={icon}/>}  placeholder="gl2020"/>
         </Form.Item>
+        <Form.Item name="role" label="角色" rules={[{required: true, message: '角色不可为空！'}]}>
+          <Select>
+            <Option key={"管理员"} value={"管理员"}>管理员</Option>
+            <Option key={"普通用户"} value={"普通用户"}>普通用户</Option>
+          </Select>
+        </Form.Item>
         <div style={{marginBottom: 20}}>
           <Checkbox checked={autoLogin} onChange={e => setAutoLogin(e.target.checked)}>自动登录</Checkbox>
-          <a onClick={() => {message.destroy;message.info('请联系公司管理员！')}} style={{float: 'right',}}>
+          <a onClick={() => {message.destroy;message.info('请联系系统管理员！')}} style={{float: 'right',}}>
             忘记密码
           </a>
         </div>

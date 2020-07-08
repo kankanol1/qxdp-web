@@ -99,11 +99,11 @@ const Model = {
               redirect = redirect.substr(redirect.indexOf('#') + 1);
             }
           } else {
-            window.location.href = '/gl/';
+            window.location.href = '/qxd/';
             return;
           }
         }
-        router.replace(redirect?redirect.split('gl')[1] :'/');
+        router.replace(redirect?redirect.split('qxd')[1] :'/');
       }
     },
 
@@ -119,6 +119,50 @@ const Model = {
         });
       }
     },
+    *logp({ response }, { call, put }) {
+
+      if(!response.currentAuthority){
+        response.currentAuthority=['admin']
+      }
+      let currentAuthority=[];
+
+      response.currentAuthority.map(i=>{
+        if(typeof i==='string'){
+          currentAuthority.push(i);
+        }else if(Array.isArray(i)){
+          currentAuthority=currentAuthority.concat(i);
+        }
+      });
+      yield put({
+        type: 'changeLoginStatus',
+        payload: {...response,currentAuthority},
+      }); // Login successfully
+
+      if (response.status==='ok') {
+        const urlParams = new URL(window.location.href);
+        const params = getPageQuery();
+        let { redirect } = params;
+
+        //http://localhost:8000/qxd/user/login?redirect=http%3A%2F%2Flocalhost%3A8000%2Fqxd%2Ffeedback
+        if (redirect) {
+          const redirectUrlParams = new URL(redirect);
+
+          if (redirectUrlParams.origin === urlParams.origin) {
+            redirect = redirect.substr(urlParams.origin.length);
+
+            if (redirect.match(/^(\/).*#/)) {
+              redirect = redirect.substr(redirect.indexOf('#') + 1);
+            }
+          } else {
+            window.location.href = '/qxd/';
+            return;
+          }
+        }
+        // router.replace(redirect?redirect.split('qxd')[1] :'/');
+        router.replace('/');
+      }
+    },
+
   },
   reducers: {
     changeLoginStatus(state, { payload }) {

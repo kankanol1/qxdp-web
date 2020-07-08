@@ -12,4 +12,11 @@ export async function verification(params) {
     params: params,
   });
 }
+export async function saveOne(params) {
+  // console.log();
+  request("/api/user/saveOne",{
+    method:'POST',
+    data:params,
+  })
+}
 
