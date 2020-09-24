@@ -3,15 +3,14 @@ import {Link} from 'umi';
 import {connect} from 'dva';
 import {withRouter} from 'react-router-dom';
 import Algorithm from '../../../utils/Algorithm';
-import RID from '../../../utils/rid';
-
+import CryptoJS from 'crypto-js';
 import {
   message,
   Form,
   Input,
   Tooltip,
   Button,
-  AutoComplete,
+  AutoComplete, Select,
 } from 'antd';
 import {
   MobileOutlined,
@@ -71,6 +70,31 @@ const userlist = {
 };
 
 
+function encryptQXD (message, key) {
+  var keyHex = CryptoJS.enc.Utf8.parse(key);
+  var encrypted = CryptoJS.DES.encrypt(message, keyHex, {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7
+  });
+  /*return {
+    key: keyHex,
+    value: encrypted.toString()
+  }*/
+  return encrypted.toString();
+}
+
+function decrypt (message, key) {
+  var plaintext = CryptoJS.DES.decrypt(message, key, {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7
+  })
+  return plaintext.toString(CryptoJS.enc.Utf8)
+}
+/*
+*
+* var a = encrypt('mssage123', '123');
+var b = decrypt(a.value, a.key);
+* */
 const RegistrationForm = (props) => {
   const {userAndUserRegister, submitting, dispatch,history} = props;
   const [form] = Form.useForm();
@@ -78,16 +102,25 @@ const RegistrationForm = (props) => {
 
   const onFinish = values => {
     delete values.confirm;
-    request("/api/user/saveOne",{
+    message.destroy();
+    // values.password=Algorithm.encryptQXD(values.password, values.password);
+    values.role=1;
+    request("/qxdpc/api/pc/user/create",{
       method:'POST',
-      params:values,
+      data:values,
     }).then(res=>{
-      if(res.status==='ok'){
-        message.info({content:"注册成功，即将前往登录页！",onClose:()=>{
-          router.push("/user/login");
-          }});
+      if(res.status==='200'){
+        if(res.data){
+          message.info({content:"注册成功，即将前往登录页！",onClose:()=>{
+              router.push("/user/login");
+            }});
+        }else{
+          message.info("服务器异常，请联系管理员！");
+        }
+
+      }else{
+        message.info(res.msg);
       }
-      console.log(res);
     })
   };
   const onReset = () => {
@@ -120,15 +153,15 @@ const RegistrationForm = (props) => {
           {...formItemLayout}
           name={["name"]}
           label="账号："
-          rules={[{
+     /*     rules={[{
             required: true,
             message: '数字、英文字母或者下划线组成的字符！',
             pattern:/^\w{6,18}$/
-          },]}
+          },]}*/
         >
           <Input allowClear prefix={<UserOutlined style={icon}/>}/>
         </Form.Item>
-        <Form.Item
+{/*        <Form.Item
           name={["role"]}
           label="角色"
           rules={[{required: true,},]}
@@ -137,14 +170,20 @@ const RegistrationForm = (props) => {
             allowClear
             style={{width: '100%',}}
           />
-        </Form.Item>
+          <Select>
+            <Option key="1" value="1">管理员</Option>
+            <Option key="2" value="2">普通用户</Option>
+          </Select>
+        </Form.Item>*/}
         <Form.Item
           name={["password"]}
           label="密码："
           {...formItemLayout}
           rules={[
-            {required: true, message: '密码长度不可低于6位，且包含数字和字母！',
-            pattern:/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,245}$/},]
+            {
+              required: true,
+              message: '密码长度不可低于6位，且包含数字和字母！',
+              pattern:/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,245}$/},]
           }
         >
           <Input.Password prefix={<LockOutlined style={icon}/>} suffix={

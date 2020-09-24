@@ -46,7 +46,7 @@ const UserFeedbackPage = props => {
       console.error(e);
     }
   }
-  return (<div style={{padding:20}}>
+  return (<div style={{padding:20,overflowX:"hidden"}}>
     <PageHeaderWrapper pageHeaderRender={e => {
       const data = e.breadcrumb.routes;
       return (<div style={{paddingTop: 20, paddingLeft: 20}}>

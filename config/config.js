@@ -82,7 +82,6 @@ if (isAntDesignProPreview) {
 
 export default {
   plugins,
-  hash: true,
   targets: {
     ie: 11,
   },
@@ -149,7 +148,8 @@ export default {
               name: '课程审核',
               path: '/check',
               component: './CurriculuReview',
-            },{
+            },
+            {
               name: '审核',
               path: '/check/check',
               hideInMenu:true,
@@ -181,11 +181,37 @@ export default {
               name: '人员管理',
               path: '/person',
               component: './PersonManagement',
-            },{
+            },
+            {
               name: '人员管理',
               path: '/person/manage',
               hideInMenu:true,
               component: './PersonManagement/CheckPage',
+            },
+            {
+              name: '测试',
+              path: '/data',
+              hideInMenu:true,
+              component: './data',
+              routes: [
+                {
+                  path: '/data',
+                  redirect: './data/data'
+                },
+                {
+                  name: '数据',
+                  path: '/data/data',
+                  component: './data/data',
+                }, {
+                  name: '数据',
+                  path: '/data/ding',
+                  component: './data/ding',
+                },{
+                  name: '数据',
+                  path: '/data/tables',
+                  component: './data/tables',
+                },
+              ]
             },
             {
               component: './404',
@@ -246,5 +272,7 @@ export default {
   base: publicPath, //最终输出路径
   publicPath: publicPath,
   proxy: proxy[REACT_APP_ENV || 'dev'],
+  hash: true,
+  history:'hash',
   chainWebpack: webpackPlugin,
 };

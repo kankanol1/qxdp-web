@@ -119,26 +119,36 @@ const Model = {
         });
       }
     },
-    *logp({ response }, { call, put }) {
+    *logins({ response }, { call, put }) {
 
-      if(!response.currentAuthority){
+     /* if(!response.currentAuthority){
         response.currentAuthority=['admin']
-      }
-      let currentAuthority=[];
+      }*/
+      // let currentAuthority=[];
 
-      response.currentAuthority.map(i=>{
+     /* response.currentAuthority.map(i=>{
         if(typeof i==='string'){
           currentAuthority.push(i);
         }else if(Array.isArray(i)){
           currentAuthority=currentAuthority.concat(i);
         }
-      });
+      });*/
+
+      const role =['user','admin'];
+      let currentAuthority=[role[response.role]];
+
+      let data = {
+        status:response.status,
+        type:role[response.role],
+        currentAuthority
+      }
+      console.log(data);
       yield put({
         type: 'changeLoginStatus',
-        payload: {...response,currentAuthority},
+        payload: {...data,currentAuthority},
       }); // Login successfully
 
-      if (response.status==='ok') {
+      if (response.status==='200') {
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
@@ -158,6 +168,7 @@ const Model = {
             return;
           }
         }
+
         // router.replace(redirect?redirect.split('qxd')[1] :'/');
         router.replace('/');
       }

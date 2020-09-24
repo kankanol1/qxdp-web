@@ -12,9 +12,16 @@ export async function verification(params) {
     params: params,
   });
 }
-export async function saveOne(params) {
+export async function saveOnes(params) {
   // console.log();
   request("/api/user/saveOne",{
+    method:'POST',
+    data:params,
+  })
+}
+export async function saveOne(params) {
+  // console.log();
+  request("/api/user/create",{
     method:'POST',
     data:params,
   })

@@ -3,7 +3,7 @@
  * E-mail: lidianzhong@gl-data.com.
  * To: More pain, more gain.
  */
-
+import React from 'react';
 const TestComponent=props=>{
   const {children} =props;
   return children;

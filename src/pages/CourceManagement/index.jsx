@@ -125,7 +125,6 @@ const CurriculuReviewPage = props => {
     })
   }
 
-
   const queryFun = (page, size) => {
     dispatch({
       type: 'courcespace/query',

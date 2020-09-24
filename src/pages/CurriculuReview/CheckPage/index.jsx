@@ -14,7 +14,7 @@ import styles from '../styles.less'
 const UserFeedbackPage = props => {
   const {location} = props;
   const {state} = location;
-  return (<div style={{padding: 20}}>
+  return (<div style={{padding:20,overflowX:"hidden"}}>
     <PageHeaderWrapper pageHeaderRender={e => {
       const data = e.breadcrumb.routes;
       return (<div style={{paddingTop: 20, paddingLeft: 20}}>

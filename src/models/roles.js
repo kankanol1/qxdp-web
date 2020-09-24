@@ -1,4 +1,4 @@
-import {getRoles,members} from '../services/roles';
+import {getRoles,members} from '@/services/roles';
 
 const Model = {
   namespace: "roles",

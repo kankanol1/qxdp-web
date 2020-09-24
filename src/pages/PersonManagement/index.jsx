@@ -79,7 +79,7 @@ const UserFeedbackPage = props => {
   }
 
   const operations=(<Button type={"primary"} onClick={()=>exportExcel()}>导出</Button>)
-  return (<div style={{padding:20}}>
+  return (<div style={{padding:20,overflowX:"hidden"}}>
     <PageHeaderWrapper pageHeaderRender={e => {
       const data = e.breadcrumb.routes;
       return (<div style={{paddingTop: 20, paddingLeft: 20}}>
